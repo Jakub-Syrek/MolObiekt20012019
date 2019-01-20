@@ -1,0 +1,98 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+//using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ConsoleApp1;
+
+namespace ConsoleApp1
+{
+    public static class Program
+    {
+        static void Main(string[] args)
+        {
+            string s = "ala ma kota, ale As to pies";
+            Console.WriteLine(ConsoleApp1.Utility.Wordcount(s));
+            Console.WriteLine(s.Wordcount());
+            Zakres range = new Zakres(2, 9);
+            for (int i = 0;i < range.Count;i++)
+            {
+                Console.WriteLine(range[i]);//tylko odczyt bo nie ma settersa 
+            }
+
+            foreach (var x in range)
+            {
+                Console.WriteLine(x);
+            }
+
+            Console.ReadKey();
+
+           foreach (var x in ZakresNz(2,9))
+            {
+
+            }
+
+        }
+        public static IEnumerable<int> ZakresNz(int min, int max)
+        {
+            for (int i = min;i <= max ; i++)
+            {
+                yield return i;  //yield ==> budowanie operatora np w kolekcji
+            }
+        }
+    }
+    //zaprojektuj klase ienumerable przechowujaca dost liczby w zakresie od min do max
+    class Zakres : IEnumerable
+    {
+        private int[] tab;
+        public Zakres(int min, int max)
+        {
+            if (max <= min) throw new ArgumentException();
+            tab = new int[max - min + 1];
+            for (int i = 0; i < tab.Length; i++)
+            {
+                tab[i] = min + i;
+            }
+        }
+            public int Count => tab.Length;
+        public int this[int i]=>tab[i];
+
+        
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return tab.GetEnumerator();
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    public static class Utility
+    {
+        public static int Wordcount(this string napis) // this tw. metode rozsz
+        {
+            string[] wyrazy = napis.Split(new char[] { ' ', '\t', '\n', ',' },StringSplitOptions.RemoveEmptyEntries);
+            return wyrazy.Length;
+
+        }
+    }
+}
